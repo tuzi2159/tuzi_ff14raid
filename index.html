@@ -1,19 +1,48 @@
-<!-- 🔥 MODAL -->
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Raid Scheduler Clone</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h1>FF14 Raid Scheduler</h1>
+  <button onclick="openModal()">＋新增成員</button>
+</header>
+
+<div class="layout">
+
+  <div class="panel">
+    <h2>已輸入</h2>
+    <div id="list"></div>
+  </div>
+
+  <div class="panel">
+    <h2>結果</h2>
+    <div id="result"></div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
 <div id="modal" class="modal hidden">
-  <div class="modal-box">
+  <div class="box">
 
-    <h3>新增一位成員一週時段</h3>
+    <h3>新增成員週時間</h3>
 
-    <!-- 人員 -->
-    <label>人員</label>
-    <select id="m_member"></select>
+    <select id="member"></select>
 
-    <div id="weekForm"></div>
+    <div id="form"></div>
 
-    <div class="modal-actions">
-      <button onclick="submitWeek()">新增</button>
-      <button onclick="closeModal()">取消</button>
-    </div>
+    <button onclick="submit()">新增</button>
+    <button onclick="closeModal()">取消</button>
 
   </div>
 </div>
+
+<script src="script.js"></script>
+</body>
+</html>
