@@ -1,50 +1,86 @@
 body{
   margin:0;
-  font-family:Arial;
+  font-family:system-ui;
   background:#0f1115;
-  color:white;
+  color:#eaeaea;
 }
 
-header{
+/* top bar */
+.topbar{
   display:flex;
-  padding:10px;
-  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
 }
 
-.layout{
+h1{
+  font-size:18px;
+}
+
+/* main grid */
+.grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:10px;
-  padding:10px;
+  gap:12px;
+  padding:12px;
 }
 
-.panel{
-  background:#1a1f2b;
-  padding:10px;
-  border-radius:10px;
+/* card */
+.card{
+  background:#171a21;
+  border-radius:12px;
+  padding:12px;
 }
 
+/* list item */
+.item{
+  background:#222838;
+  padding:8px;
+  margin:6px 0;
+  border-radius:8px;
+}
+
+/* button */
+button{
+  background:#2a3142;
+  border:none;
+  color:white;
+  padding:6px 10px;
+  border-radius:8px;
+}
+
+/* modal */
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.7);
+  background:rgba(0,0,0,.6);
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
 }
 
 .hidden{display:none;}
 
-.box{
-  background:#1a1f2b;
-  padding:15px;
-  width:350px;
-  border-radius:10px;
+.modal-box{
+  width:360px;
+  background:#171a21;
+  padding:16px;
+  border-radius:12px;
 }
 
-.day{
-  margin:8px 0;
+select,input{
+  width:100%;
+  margin:6px 0;
   padding:6px;
-  background:#222838;
+  background:#0f1115;
+  color:white;
+  border:1px solid #2c3445;
   border-radius:6px;
+}
+
+.actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  margin-top:10px;
 }
