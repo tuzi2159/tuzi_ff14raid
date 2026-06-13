@@ -1,43 +1,98 @@
 const members = ["MT","ST","H1","H2","D1","D2","D3","D4"];
+const days = ["五","六","日"];
 
 let data = [];
 
+const modal = document.getElementById("modal");
 const listDiv = document.getElementById("list");
 const resultDiv = document.getElementById("result");
-const modal = document.getElementById("modal");
 
-/* ========= init ========= */
+/* ================= INIT ================= */
+
 function init(){
-  const sel = document.getElementById("m_member");
-  sel.innerHTML = members.map(m=>`<option>${m}</option>`).join("");
+  document.getElementById("m_member").innerHTML =
+    members.map(m=>`<option>${m}</option>`).join("");
 }
+
 init();
 
-/* ========= modal ========= */
+/* ================= MODAL ================= */
+
 function openModal(){
   modal.classList.remove("hidden");
+  buildWeekForm();
 }
 
 function closeModal(){
   modal.classList.add("hidden");
 }
 
-/* ========= add slot ========= */
-function addSlot(){
+/* 🔥 建立整週表單 */
+function buildWeekForm(){
+
+  const box = document.getElementById("weekForm");
+
+  let timeOptions = "";
+  for(let h=14; h<=24; h+=0.5){
+    let hh = Math.floor(h);
+    let mm = h % 1 === 0 ? "00" : "30";
+    let label = `${String(hh).padStart(2,"0")}:${mm}`;
+    timeOptions += `<option value="${label}">${label}</option>`;
+  }
+
+  box.innerHTML = "";
+
+  days.forEach(d=>{
+    box.innerHTML += `
+      <div class="day-block">
+        <h4>${d}</h4>
+
+        <div>時段1
+          <select class="t1_${d}">
+            ${timeOptions}
+          </select>
+        </div>
+
+        <div>時段2
+          <select class="t2_${d}">
+            ${timeOptions}
+          </select>
+        </div>
+      </div>
+    `;
+  });
+}
+
+/* ================= SUBMIT ================= */
+
+function submitWeek(){
 
   const m = document.getElementById("m_member").value;
-  const d = document.getElementById("m_day").value;
-  const s = document.getElementById("m_start").value;
-  const e = document.getElementById("m_end").value;
 
-  data.push({m,d,s,e});
+  days.forEach(d=>{
+
+    const t1 = document.querySelector(`.t1_${d}`).value;
+    const t2 = document.querySelector(`.t2_${d}`).value;
+
+    if(!t1 || !t2) return;
+
+    data.push({
+      m,
+      d,
+      s: t1,
+      e: t2
+    });
+
+  });
 
   renderList();
   closeModal();
 }
 
-/* ========= render list ========= */
+/* ================= LIST ================= */
+
 function renderList(){
+
   listDiv.innerHTML = "";
 
   data.forEach((x,i)=>{
@@ -56,7 +111,8 @@ function remove(i){
   renderList();
 }
 
-/* ========= time utils ========= */
+/* ================= TIME ================= */
+
 function toMin(t){
   const [h,m]=t.split(":").map(Number);
   return h*60+m;
@@ -68,7 +124,8 @@ function toSlots(s,e){
   return arr;
 }
 
-/* ========= calc ========= */
+/* ================= CALC ================= */
+
 function calc(){
 
   let map = {};
@@ -89,7 +146,6 @@ function calc(){
   for(const day in map){
 
     let timeline={};
-
     members.forEach(m=>timeline[m]=new Set());
 
     for(const m in map[day]){
@@ -105,6 +161,7 @@ function calc(){
       let available = members.filter(m=>timeline[m].has(t)).length;
 
       if(available>=7){
+
         let missing = members.filter(m=>!timeline[m].has(t));
 
         output.push({
@@ -120,7 +177,8 @@ function calc(){
   renderResult(output);
 }
 
-/* ========= render ========= */
+/* ================= RENDER ================= */
+
 function renderResult(res){
 
   resultDiv.innerHTML="";
@@ -139,7 +197,8 @@ function renderResult(res){
   });
 }
 
-/* ========= clear ========= */
+/* ================= CLEAR ================= */
+
 function clearAll(){
   data=[];
   listDiv.innerHTML="";
