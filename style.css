@@ -1,103 +1,50 @@
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #0f1115;
-  color: #e6e6e6;
+body{
+  margin:0;
+  font-family:Arial;
+  background:#0f1115;
+  color:white;
 }
 
-.app {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
-}
-
-/* header */
-header {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-h1 {
-  flex: 1;
-}
-
-/* layout */
-.layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 20px;
-}
-
-.panel {
-  background: #1a1f2b;
-  padding: 12px;
-  border-radius: 12px;
-}
-
-/* list cards */
-.card {
-  background: #222838;
-  padding: 8px;
-  margin-bottom: 8px;
-  border-radius: 8px;
-}
-
-/* modal */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hidden {
-  display: none;
-}
-
-.modal-box {
-  background: #1a1f2b;
-  padding: 20px;
-  border-radius: 12px;
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-input, select {
-  padding: 6px;
-  background: #0f1115;
-  color: white;
-  border: 1px solid #333;
-  border-radius: 6px;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-button {
-  padding: 6px 10px;
-  cursor: pointer;
-  background: #2a3142;
-  color: white;
-  border: none;
-  border-radius: 6px;
-}
-
-.day-block{
-  background:#222838;
+header{
+  display:flex;
   padding:10px;
-  margin:8px 0;
-  border-radius:8px;
+  gap:10px;
 }
 
-.day-block h4{
-  margin:0 0 6px 0;
+.layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  padding:10px;
+}
+
+.panel{
+  background:#1a1f2b;
+  padding:10px;
+  border-radius:10px;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hidden{display:none;}
+
+.box{
+  background:#1a1f2b;
+  padding:15px;
+  width:350px;
+  border-radius:10px;
+}
+
+.day{
+  margin:8px 0;
+  padding:6px;
+  background:#222838;
+  border-radius:6px;
 }
