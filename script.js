@@ -1,59 +1,10 @@
 const membersList = ["MT","ST","H1","H2","D1","D2","D3","D4"];
 const days = ["五","六","日"];
 
-let slots = {
-  "時段1": ["14:00","17:00"],
-  "時段2": ["20:00","24:00"]
-};
-
 const membersDiv = document.getElementById("members");
 const resultDiv = document.getElementById("result");
 
-/* ========== 建立「可編輯時段設定UI」 ========== */
-
-function renderSlotEditor(){
-  const container = document.createElement("div");
-  container.className = "result-block";
-
-  container.innerHTML = `
-    <h3>本週時段設定</h3>
-
-    <div>
-      時段1：
-      <input id="s1a" value="${slots["時段1"][0]}">
-      -
-      <input id="s1b" value="${slots["時段1"][1]}">
-    </div>
-
-    <div>
-      時段2：
-      <input id="s2a" value="${slots["時段2"][0]}">
-      -
-      <input id="s2b" value="${slots["時段2"][1]}">
-    </div>
-
-    <button onclick="saveSlots()">更新時段</button>
-  `;
-
-  resultDiv.innerHTML="";
-  resultDiv.appendChild(container);
-}
-
-function saveSlots(){
-  slots["時段1"]=[
-    document.getElementById("s1a").value,
-    document.getElementById("s1b").value
-  ];
-
-  slots["時段2"]=[
-    document.getElementById("s2a").value,
-    document.getElementById("s2b").value
-  ];
-
-  alert("時段已更新");
-}
-
-/* ========== UI ========== */
+/* ========= UI ========= */
 
 function addRow(){
   const row=document.createElement("div");
@@ -68,9 +19,8 @@ function addRow(){
       ${days.map(d=>`<option>${d}</option>`).join("")}
     </select>
 
-    <select>
-      ${Object.keys(slots).map(s=>`<option>${s}</option>`).join("")}
-    </select>
+    <input placeholder="14:00">
+    <input placeholder="17:00">
 
     <button onclick="this.parentElement.remove()">X</button>
   `;
@@ -78,22 +28,22 @@ function addRow(){
   membersDiv.appendChild(row);
 }
 
-/* ========== 時間處理 ========== */
+/* ========= time utils ========= */
 
 function toMin(t){
   const [h,m]=t.split(":").map(Number);
   return h*60+m;
 }
 
-function rangeToSlots(start,end){
+function toSlots(s,e){
   let arr=[];
-  for(let t=start;t<end;t+=30) arr.push(t);
+  for(let t=s;t<e;t+=30) arr.push(t);
   return arr;
 }
 
-/* ========== 建資料 ========== */
+/* ========= parse ========= */
 
-function parseData(){
+function parse(){
   const rows=document.querySelectorAll(".row");
 
   let data={};
@@ -101,27 +51,26 @@ function parseData(){
   rows.forEach(r=>{
     const m=r.children[0].value;
     const d=r.children[1].value;
-    const sKey=r.children[2].value;
-
-    const [start,end]=slots[sKey];
+    const s=toMin(r.children[2].value);
+    const e=toMin(r.children[3].value);
 
     if(!data[d]) data[d]={};
     if(!data[d][m]) data[d][m]=[];
 
-    data[d][m].push([toMin(start),toMin(end)]);
+    data[d][m].push([s,e]);
   });
 
   return data;
 }
 
-/* ========== timeline ========== */
+/* ========= timeline ========= */
 
-function buildTimeline(dayData){
+function buildMap(dayData){
   let map={};
 
   membersList.forEach(m=>{
     (dayData[m]||[]).forEach(([s,e])=>{
-      rangeToSlots(s,e).forEach(t=>{
+      toSlots(s,e).forEach(t=>{
         if(!map[t]) map[t]=new Set();
         map[t].add(m);
       });
@@ -131,9 +80,9 @@ function buildTimeline(dayData){
   return map;
 }
 
-/* ========== 合併區間 ========== */
+/* ========= merge intervals ========= */
 
-function buildIntervals(map){
+function merge(map){
   const times=Object.keys(map).map(Number).sort((a,b)=>a-b);
 
   let res=[];
@@ -158,16 +107,16 @@ function buildIntervals(map){
   return res;
 }
 
-/* ========== 計算 ========== */
+/* ========= calc ========= */
 
 function calc(){
-  const data=parseData();
-  let output=[];
+  const data=parse();
+  let out=[];
 
   for(const day in data){
 
-    const map=buildTimeline(data[day]);
-    const intervals=buildIntervals(map);
+    const map=buildMap(data[day]);
+    const intervals=merge(map);
 
     intervals.forEach(([s,e])=>{
       const people=map[s]?map[s].size:0;
@@ -179,17 +128,15 @@ function calc(){
       const hours=(e-s)/60;
 
       if(hours>=1){
-        output.push({
-          day,s,e,people,missing,hours
-        });
+        out.push({day,s,e,people,missing,hours});
       }
     });
   }
 
-  render(output);
+  render(out);
 }
 
-/* ========== render ========== */
+/* ========= render ========= */
 
 function render(data){
 
@@ -231,6 +178,7 @@ function render(data){
   }
 }
 
-/* ========== init ========== */
-
-renderSlotEditor();
+function clearAll(){
+  membersDiv.innerHTML="";
+  resultDiv.innerHTML="";
+}
