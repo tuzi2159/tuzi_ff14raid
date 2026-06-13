@@ -1,66 +1,82 @@
 const membersList = ["MT","ST","H1","H2","D1","D2","D3","D4"];
+const days = ["五","六","日"];
+const slots = {
+  "時段1": ["14:00","17:00"],
+  "時段2": ["20:00","24:00"]
+};
 
 const membersDiv = document.getElementById("members");
 const resultDiv = document.getElementById("result");
 
 /* ========== UI ========== */
 
-function addRow() {
-  const row = document.createElement("div");
-  row.className = "row";
+function addRow(){
+  const row=document.createElement("div");
+  row.className="row";
 
-  row.innerHTML = `
+  row.innerHTML=`
     <select>
-      ${membersList.map(m => `<option>${m}</option>`).join("")}
+      ${membersList.map(m=>`<option>${m}</option>`).join("")}
     </select>
-    <input placeholder="YYYY-MM-DD">
-    <input placeholder="HH:MM">
-    <input placeholder="HH:MM">
+
+    <select>
+      ${days.map(d=>`<option>${d}</option>`).join("")}
+    </select>
+
+    <select>
+      ${Object.keys(slots).map(s=>`<option>${s}</option>`).join("")}
+    </select>
+
     <button onclick="this.parentElement.remove()">X</button>
   `;
 
   membersDiv.appendChild(row);
 }
 
+/* ========== 建立時間轉分鐘 ========== */
+
 function toMin(t){
-  const [h,m] = t.split(":").map(Number);
+  const [h,m]=t.split(":").map(Number);
   return h*60+m;
 }
 
-/* ========== 把時間切成 30 分鐘 slots ========== */
-function toSlots(start,end){
-  const arr=[];
+function rangeToSlots(start,end){
+  let arr=[];
   for(let t=start;t<end;t+=30) arr.push(t);
   return arr;
 }
 
-/* ========== 收集資料 ========== */
+/* ========== 建資料 ========== */
+
 function parseData(){
   const rows=document.querySelectorAll(".row");
+
   let data={};
 
   rows.forEach(r=>{
     const m=r.children[0].value;
     const d=r.children[1].value;
-    const s=toMin(r.children[2].value);
-    const e=toMin(r.children[3].value);
+    const sKey=r.children[2].value;
+
+    const [start,end]=slots[sKey];
 
     if(!data[d]) data[d]={};
     if(!data[d][m]) data[d][m]=[];
 
-    data[d][m].push([s,e]);
+    data[d][m].push([toMin(start),toMin(end)]);
   });
 
   return data;
 }
 
-/* ========== 建立每個時間點可用人數 map ========== */
+/* ========== timeline ========== */
+
 function buildTimeline(dayData){
   let map={};
 
   membersList.forEach(m=>{
     (dayData[m]||[]).forEach(([s,e])=>{
-      toSlots(s,e).forEach(t=>{
+      rangeToSlots(s,e).forEach(t=>{
         if(!map[t]) map[t]=new Set();
         map[t].add(m);
       });
@@ -70,38 +86,35 @@ function buildTimeline(dayData){
   return map;
 }
 
-/* ========== 找連續區間 ========== */
+/* ========== 合併區間 ========== */
+
 function buildIntervals(map){
   const times=Object.keys(map).map(Number).sort((a,b)=>a-b);
 
-  let result=[];
+  let res=[];
   let start=null;
   let prev=null;
 
   for(let t of times){
     if(start===null){
-      start=t;
-      prev=t;
-      continue;
+      start=t; prev=t; continue;
     }
 
     if(t===prev+30){
       prev=t;
     }else{
-      result.push([start,prev+30]);
-      start=t;
-      prev=t;
+      res.push([start,prev+30]);
+      start=t; prev=t;
     }
   }
 
-  if(start!==null){
-    result.push([start,prev+30]);
-  }
+  if(start!==null) res.push([start,prev+30]);
 
-  return result;
+  return res;
 }
 
-/* ========== 計算最佳排程 ========== */
+/* ========== 計算 ========== */
+
 function calc(){
   const data=parseData();
   let output=[];
@@ -112,9 +125,9 @@ function calc(){
     const intervals=buildIntervals(map);
 
     intervals.forEach(([s,e])=>{
-      const people = map[s] ? map[s].size : 0;
+      const people=map[s]?map[s].size:0;
 
-      const missing = membersList.filter(m=>{
+      const missing=membersList.filter(m=>{
         return !(map[s] && map[s].has(m));
       });
 
@@ -122,11 +135,7 @@ function calc(){
 
       if(hours>=1){
         output.push({
-          day,
-          s,e,
-          people,
-          missing,
-          hours
+          day,s,e,people,missing,hours
         });
       }
     });
@@ -135,8 +144,10 @@ function calc(){
   render(output);
 }
 
-/* ========== 排序 + 顯示 ========== */
+/* ========== render ========== */
+
 function render(data){
+
   resultDiv.innerHTML="";
 
   data.sort((a,b)=>{
@@ -164,13 +175,9 @@ function render(data){
       const e=`${String(Math.floor(d.e/60)).padStart(2,"0")}:${String(d.e%60).padStart(2,"0")}`;
 
       if(d.people===8){
-        block.innerHTML+=`
-          <div>🟢 ${s}-${e}｜8/8｜${d.hours}h</div>
-        `;
+        block.innerHTML+=`<div>🟢 ${s}-${e}｜8/8｜${d.hours}h</div>`;
       }else{
-        block.innerHTML+=`
-          <div>🟡 ${s}-${e}｜${d.people}/8｜缺：${d.missing.join(",")}｜${d.hours}h</div>
-        `;
+        block.innerHTML+=`<div>🟡 ${s}-${e}｜${d.people}/8｜缺：${d.missing.join(",")}｜${d.hours}h</div>`;
       }
 
     });
