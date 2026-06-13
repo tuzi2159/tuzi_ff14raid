@@ -140,7 +140,7 @@ button.primary:hover{
 
 /* ===== MOBILE ===== */
 
-@media (max-width:300px){
+@media (max-width:1100px){
   .grid{
     grid-template-columns:1fr;
   }
