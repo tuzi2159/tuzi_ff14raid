@@ -145,3 +145,13 @@ button.primary:hover{
     grid-template-columns:1fr;
   }
 }
+
+.time-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.time-row select{
+  flex:1;
+}
