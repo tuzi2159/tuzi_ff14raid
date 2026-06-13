@@ -8,48 +8,31 @@
 
 <body>
 
-<div class="container">
+<div class="app">
 
-  <div class="topbar">
+  <div class="header">
     <h1>FF14 Raid Scheduler</h1>
-    <button onclick="openModal()">＋新增成員</button>
+    <button onclick="addMock()">＋新增測試資料</button>
   </div>
 
   <div class="grid">
 
-    <div class="card">
-      <h2>已輸入資料</h2>
-      <div id="list"></div>
+    <!-- 左：人 -->
+    <div class="panel">
+      <h2>成員</h2>
+      <div id="members"></div>
     </div>
 
-    <div class="card">
-      <h2>最佳時間</h2>
-      <div id="result"></div>
+    <!-- 中：時間軸 -->
+    <div class="panel">
+      <h2>時間軸</h2>
+      <div id="timeline"></div>
     </div>
 
   </div>
 
 </div>
 
-<!-- modal -->
-<div id="modal" class="modal hidden">
-  <div class="modal-box">
-
-    <h3>新增成員</h3>
-    
-    <select id="member"></select>
-
-    <div id="form"></div>
-
-    <div class="actions">
-      <button onclick="submit()">新增</button>
-      <button onclick="closeModal()">取消</button>
-    </div>
-
-  </div>
-</div>
-
-<script src="script.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
-
