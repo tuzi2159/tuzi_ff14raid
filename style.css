@@ -150,8 +150,27 @@ button.primary:hover{
   display:flex;
   align-items:center;
   gap:8px;
+
+  /* 🔥 強制不換行 */
+  flex-wrap:nowrap;
 }
 
+/* 🔥 關鍵：不要 100% */
 .time-row select{
-  flex:1;
+  width:auto;
+  flex:0 0 110px;   /* 固定寬度 */
+}
+
+/* 中間的 dash */
+.time-row span{
+  flex:0 0 auto;
+  color:#888;
+}
+
+/* 外層 day block 不要撐爆 */
+.day-block{
+  background:#222838;
+  padding:10px;
+  margin:8px 0;
+  border-radius:8px;
 }
