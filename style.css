@@ -1,59 +1,128 @@
 body{
   margin:0;
-  font-family:system-ui;
+  font-family: system-ui, -apple-system, sans-serif;
   background:#0f1115;
   color:#eaeaea;
 }
 
-/* top bar */
+/* ===== layout ===== */
+
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:16px;
+}
+
 .topbar{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  padding:16px;
+  align-items:center;
+  margin-bottom:12px;
 }
 
 h1{
   font-size:18px;
+  font-weight:600;
 }
 
-/* main grid */
+/* ===== grid cards ===== */
+
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
-  padding:12px;
 }
 
-/* card */
 .card{
   background:#171a21;
-  border-radius:12px;
+  border-radius:14px;
   padding:12px;
 }
 
-/* list item */
+/* ===== LIST ITEM ===== */
+
 .item{
   background:#222838;
-  padding:8px;
+  padding:10px;
   margin:6px 0;
-  border-radius:8px;
+  border-radius:10px;
+  font-size:14px;
 }
 
-/* button */
+/* ========================= */
+/* 🔥 INPUT CONTROLS (重點)  */
+/* ========================= */
+
+select,
+input{
+  width:100%;
+  margin:6px 0;
+  padding:10px 10px;
+  background:#0f1115;
+  color:#eaeaea;
+  border:1px solid #2a3142;
+  border-radius:10px;
+
+  outline:none;
+  transition:0.15s ease;
+}
+
+/* hover */
+select:hover,
+input:hover{
+  border-color:#3a4560;
+}
+
+/* focus（很重要：讓它有產品感） */
+select:focus,
+input:focus{
+  border-color:#5b6cff;
+  box-shadow:0 0 0 2px rgba(91,108,255,0.25);
+}
+
+/* ========================= */
+/* 🔥 BUTTONS（重點升級）    */
+/* ========================= */
+
 button{
   background:#2a3142;
-  border:none;
-  color:white;
-  padding:6px 10px;
-  border-radius:8px;
+  color:#eaeaea;
+  border:1px solid transparent;
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+
+  font-weight:500;
+  transition:0.15s ease;
 }
 
-/* modal */
+/* hover */
+button:hover{
+  background:#364059;
+  transform:translateY(-1px);
+}
+
+/* click */
+button:active{
+  transform:translateY(0px);
+  opacity:0.9;
+}
+
+/* primary button（你可以給＋新增用） */
+button.primary{
+  background:#5b6cff;
+}
+
+button.primary:hover{
+  background:#6b7bff;
+}
+
+/* ===== MODAL ===== */
+
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.6);
+  background:rgba(0,0,0,0.6);
   display:flex;
   justify-content:center;
   align-items:center;
@@ -62,25 +131,17 @@ button{
 .hidden{display:none;}
 
 .modal-box{
-  width:360px;
+  width:380px;
   background:#171a21;
   padding:16px;
-  border-radius:12px;
+  border-radius:14px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.5);
 }
 
-select,input{
-  width:100%;
-  margin:6px 0;
-  padding:6px;
-  background:#0f1115;
-  color:white;
-  border:1px solid #2c3445;
-  border-radius:6px;
-}
+/* ===== MOBILE ===== */
 
-.actions{
-  display:flex;
-  justify-content:flex-end;
-  gap:8px;
-  margin-top:10px;
+@media (max-width:900px){
+  .grid{
+    grid-template-columns:1fr;
+  }
 }
