@@ -2,43 +2,49 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>Raid Scheduler Clone</title>
+  <title>Raid Scheduler</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
-  <h1>FF14 Raid Scheduler</h1>
-  <button onclick="openModal()">＋新增成員</button>
-</header>
+<div class="container">
 
-<div class="layout">
-
-  <div class="panel">
-    <h2>已輸入</h2>
-    <div id="list"></div>
+  <div class="topbar">
+    <h1>FF14 Raid Scheduler</h1>
+    <button onclick="openModal()">＋新增成員</button>
   </div>
 
-  <div class="panel">
-    <h2>結果</h2>
-    <div id="result"></div>
+  <div class="grid">
+
+    <div class="card">
+      <h2>已輸入資料</h2>
+      <div id="list"></div>
+    </div>
+
+    <div class="card">
+      <h2>最佳時間</h2>
+      <div id="result"></div>
+    </div>
+
   </div>
 
 </div>
 
-<!-- MODAL -->
+<!-- modal -->
 <div id="modal" class="modal hidden">
-  <div class="box">
+  <div class="modal-box">
 
-    <h3>新增成員週時間</h3>
+    <h3>新增成員</h3>
 
     <select id="member"></select>
 
     <div id="form"></div>
 
-    <button onclick="submit()">新增</button>
-    <button onclick="closeModal()">取消</button>
+    <div class="actions">
+      <button onclick="submit()">新增</button>
+      <button onclick="closeModal()">取消</button>
+    </div>
 
   </div>
 </div>
