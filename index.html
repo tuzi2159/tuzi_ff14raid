@@ -2,27 +2,34 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>FF14 固團時間分析器</title>
+  <title>FF14 Raid Planner</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <h1>FF14 固團時間分析器</h1>
+  <div class="app">
 
-  <div class="container">
-
-    <div class="input">
-      <h2>輸入時段</h2>
-
-      <div id="members"></div>
-
+    <header>
+      <h1>FF14 Raid Planner</h1>
       <button onclick="addRow()">＋新增時段</button>
-      <button onclick="calc()">計算</button>
+      <button onclick="calc()">計算最佳時間</button>
       <button onclick="clearAll()">清空</button>
-    </div>
+    </header>
 
-    <div class="output">
-      <h2>結果</h2>
-      <div id="result"></div>
+    <div class="layout">
+
+      <!-- 左：輸入 -->
+      <section class="panel">
+        <h2>輸入時間</h2>
+        <div id="members"></div>
+      </section>
+
+      <!-- 右：結果 -->
+      <section class="panel">
+        <h2>最佳排程</h2>
+        <div id="result"></div>
+      </section>
+
     </div>
 
   </div>
