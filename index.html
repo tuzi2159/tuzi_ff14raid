@@ -1,70 +1,19 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8" />
-  <title>Raid Scheduler</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-<div class="app">
-
-  <header>
-    <h1>FF14 Raid Scheduler</h1>
-
-    <button onclick="openModal()">＋新增時段</button>
-    <button onclick="calc()">計算</button>
-    <button onclick="clearAll()">清空</button>
-  </header>
-
-  <div class="layout">
-
-    <!-- 左：已輸入資料 -->
-    <div class="panel">
-      <h2>已輸入時段</h2>
-      <div id="list"></div>
-    </div>
-
-    <!-- 右：結果 -->
-    <div class="panel">
-      <h2>最佳時間</h2>
-      <div id="result"></div>
-    </div>
-
-  </div>
-</div>
-
 <!-- 🔥 MODAL -->
 <div id="modal" class="modal hidden">
   <div class="modal-box">
 
-    <h3>新增時段</h3>
+    <h3>新增一位成員一週時段</h3>
 
+    <!-- 人員 -->
     <label>人員</label>
     <select id="m_member"></select>
 
-    <label>星期</label>
-    <select id="m_day">
-      <option>五</option>
-      <option>六</option>
-      <option>日</option>
-    </select>
-
-    <label>開始時間（14:00~24:00）</label>
-    <input id="m_start" placeholder="20:00">
-
-    <label>結束時間</label>
-    <input id="m_end" placeholder="24:00">
+    <div id="weekForm"></div>
 
     <div class="modal-actions">
-      <button onclick="addSlot()">新增</button>
+      <button onclick="submitWeek()">新增</button>
       <button onclick="closeModal()">取消</button>
     </div>
 
   </div>
 </div>
-
-<script src="script.js"></script>
-</body>
-</html>
