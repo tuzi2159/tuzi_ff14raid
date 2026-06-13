@@ -21,6 +21,15 @@ function closeModal(){
 }
 
 /* form */
+function timeOptions(){
+  let opt="";
+  for(let h=14; h<=24; h++){
+    opt+=`<option>${String(h).padStart(2,"0")}:00</option>`;
+    if(h<24) opt+=`<option>${String(h).padStart(2,"0")}:30</option>`;
+  }
+  return opt;
+}
+
 function buildForm(){
 
   const box=document.getElementById("form");
@@ -31,10 +40,30 @@ function buildForm(){
       <div style="margin-top:10px;">
         <b>${d}</b>
 
-        <input placeholder="開始 14:00">
-        <input placeholder="結束 24:00">
-        <input placeholder="開始 14:00">
-        <input placeholder="結束 24:00">
+        <div class="time-row">
+          <select class="s1_${d}">
+            ${timeOptions()}
+          </select>
+
+          <span>—</span>
+
+          <select class="e1_${d}">
+            ${timeOptions()}
+          </select>
+        </div>
+
+        <div class="time-row">
+          <select class="s2_${d}">
+            ${timeOptions()}
+          </select>
+
+          <span>—</span>
+
+          <select class="e2_${d}">
+            ${timeOptions()}
+          </select>
+        </div>
+
       </div>
     `;
   });
