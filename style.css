@@ -1,102 +1,92 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   background: #0f1115;
   color: #e6e6e6;
 }
 
 .app {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: auto;
   padding: 20px;
 }
 
-/* ===== header ===== */
-
+/* header */
 header {
   display: flex;
-  align-items: center;
   gap: 10px;
-  margin-bottom: 20px;
+  align-items: center;
 }
 
 h1 {
   flex: 1;
-  font-size: 20px;
 }
 
-/* ===== layout ===== */
-
+/* layout */
 .layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+  margin-top: 20px;
 }
 
 .panel {
-  background: #171a21;
-  padding: 16px;
+  background: #1a1f2b;
+  padding: 12px;
   border-radius: 12px;
 }
 
-/* ===== row（像卡片）===== */
-
-.row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr auto;
-  gap: 6px;
-  margin-bottom: 8px;
+/* list cards */
+.card {
+  background: #222838;
   padding: 8px;
-  background: #1f2430;
-  border-radius: 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
 }
 
-select, input {
-  background: #11151c;
-  color: #e6e6e6;
-  border: 1px solid #2c3445;
-  border-radius: 6px;
+/* modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal-box {
+  background: #1a1f2b;
+  padding: 20px;
+  border-radius: 12px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+input, select {
   padding: 6px;
+  background: #0f1115;
+  color: white;
+  border: 1px solid #333;
+  border-radius: 6px;
 }
 
-/* ===== buttons ===== */
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
 
 button {
+  padding: 6px 10px;
+  cursor: pointer;
   background: #2a3142;
   color: white;
   border: none;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #3a4560;
-}
-
-/* ===== result card ===== */
-
-.result-block {
-  background: #1f2430;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 12px;
-}
-
-.result-block h3 {
-  margin: 0 0 8px 0;
-  font-size: 14px;
-  color: #9aa4b2;
-}
-
-/* ===== mobile ===== */
-
-@media (max-width: 900px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  .row {
-    grid-template-columns: 1fr;
-  }
+  border-radius: 6px;
 }
