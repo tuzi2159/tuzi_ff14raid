@@ -1,12 +1,57 @@
 const membersList = ["MT","ST","H1","H2","D1","D2","D3","D4"];
 const days = ["五","六","日"];
-const slots = {
+
+let slots = {
   "時段1": ["14:00","17:00"],
   "時段2": ["20:00","24:00"]
 };
 
 const membersDiv = document.getElementById("members");
 const resultDiv = document.getElementById("result");
+
+/* ========== 建立「可編輯時段設定UI」 ========== */
+
+function renderSlotEditor(){
+  const container = document.createElement("div");
+  container.className = "result-block";
+
+  container.innerHTML = `
+    <h3>本週時段設定</h3>
+
+    <div>
+      時段1：
+      <input id="s1a" value="${slots["時段1"][0]}">
+      -
+      <input id="s1b" value="${slots["時段1"][1]}">
+    </div>
+
+    <div>
+      時段2：
+      <input id="s2a" value="${slots["時段2"][0]}">
+      -
+      <input id="s2b" value="${slots["時段2"][1]}">
+    </div>
+
+    <button onclick="saveSlots()">更新時段</button>
+  `;
+
+  resultDiv.innerHTML="";
+  resultDiv.appendChild(container);
+}
+
+function saveSlots(){
+  slots["時段1"]=[
+    document.getElementById("s1a").value,
+    document.getElementById("s1b").value
+  ];
+
+  slots["時段2"]=[
+    document.getElementById("s2a").value,
+    document.getElementById("s2b").value
+  ];
+
+  alert("時段已更新");
+}
 
 /* ========== UI ========== */
 
@@ -33,7 +78,7 @@ function addRow(){
   membersDiv.appendChild(row);
 }
 
-/* ========== 建立時間轉分鐘 ========== */
+/* ========== 時間處理 ========== */
 
 function toMin(t){
   const [h,m]=t.split(":").map(Number);
@@ -186,7 +231,6 @@ function render(data){
   }
 }
 
-function clearAll(){
-  membersDiv.innerHTML="";
-  resultDiv.innerHTML="";
-}
+/* ========== init ========== */
+
+renderSlotEditor();
