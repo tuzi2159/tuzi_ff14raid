@@ -22,7 +22,7 @@ body{
 
 h1{
   font-size:18px;
-  font-weight:600;
+  font-weight:300;
 }
 
 /* ===== grid cards ===== */
@@ -55,7 +55,7 @@ h1{
 
 select,
 input{
-  width:300px;
+  width:100%;
   margin:6px 0;
   padding:10px 10px;
   background:#0f1115;
