@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>Raid Scheduler</title>
+  <title>Raid Sheet Web</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -10,26 +10,12 @@
 
 <div class="app">
 
-  <div class="header">
-    <h1>FF14 Raid Scheduler</h1>
-    <button onclick="addMock()">＋新增測試資料</button>
+  <div class="topbar">
+    <h1>FF14 Raid Sheet</h1>
+    <button onclick="calc()">計算最佳時間</button>
   </div>
 
-  <div class="grid">
-
-    <!-- 左：人 -->
-    <div class="panel">
-      <h2>成員</h2>
-      <div id="members"></div>
-    </div>
-
-    <!-- 中：時間軸 -->
-    <div class="panel">
-      <h2>時間軸</h2>
-      <div id="timeline"></div>
-    </div>
-
-  </div>
+  <div id="table"></div>
 
 </div>
 
